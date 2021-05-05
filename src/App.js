@@ -20,8 +20,19 @@ export default function App() {
     apiCallFunction();
   }, [pageNumber]);
 
-  // const MAX_PAGE_NUMBER = 20
-  // const pageNumberArray =
+  let apiData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
+
+  const paginatedData = (page, limit) =>
+    apiData.slice(page * limit - limit, page * limit);
+
+  console.log(paginatedData(3, 2));
+  // [5,6]
+
+  const MAX_PAGE_NUMBER = 20;
+
+  const pageNumbersArray = new Array(MAX_PAGE_NUMBER)
+    .fill(1)
+    .map((_, idx) => idx + 1);
 
   const handlePrevious = () => {
     setPageNumber(pageNumber <= 1 ? pageNumber : pageNumber - 1);
@@ -44,6 +55,13 @@ export default function App() {
       <button disabled={pageNumber === 20} onClick={handleNext}>
         Next
       </button>
+      <div>
+        {pageNumbersArray.map((item, idx) => (
+          <button key={idx} onClick={() => setPageNumber(idx + 1)}>
+            {item}
+          </button>
+        ))}
+      </div>
     </div>
   );
 }
